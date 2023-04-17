@@ -33,53 +33,136 @@ const initialState = {
   otherSell: [],
 
   loading: false,
-  error: false
+  response: true,
+  error: ""
 };  
 
 const slice = createSlice({
   name: 'currentUser',
   initialState: initialState,
   reducers: {
+    // reset response
+    resetError(state, action) {
+      state.response = true;
+      state.error = "";
+    },
     // logout
     logout(state, action) {
-      state.currentUser = null,
-      state.loading = false,
-      state.error = ""
+      state.currentUser = null;
+      state.loading = false;
+      state.response = true;
+      state.error = "";
     },
   }, 
   extraReducers: {
     // sign up
     [createCustomerThunk.pending]:
     (state) => {
-      state.loading = true;
       state.currentUser = null;
+      state.currentReview = [];
+      state.currentFollowing = [];
+      state.currentFollower = [];
+      state.currentSell = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
     },
     [createCustomerThunk.fulfilled]:
     (state, { payload }) => {
-      state.loading = false;
       state.currentUser = payload;
+      state.loading = false;
     },
     [createCustomerThunk.rejected]:
     (state, action) => {
       state.loading = false;
-      state.error = action.error; // action: {payload, error, ...}
+      state.response = false;
+      state.error = "Email exists."; // action: {payload, error, ...}
+    },
+    [createSellerThunk.pending]:
+    (state) => {
+      state.currentUser = null;
+      state.currentReview = [];
+      state.currentFollowing = [];
+      state.currentFollower = [];
+      state.currentSell = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [createSellerThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentUser = payload;
+      state.loading = false;
+    },
+    [createSellerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = "Email exists."; // action: {payload, error, ...}
     },
     // login 
     [findCustomerLoginThunk.pending]:
     (state) => {
-      state.loading = true;
       state.currentUser = null;
+      state.currentReview = [];
+      state.currentFollowing = [];
+      state.currentFollower = [];
+      state.currentSell = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
     },
     [findCustomerLoginThunk.fulfilled]:
     (state, { payload }) => {
-      state.loading = false;
       state.currentUser = payload;
+      state.loading = false;
     },
     [findCustomerLoginThunk.rejected]:
     (state, action) => {
       state.loading = false;
-      state.error = action.error;
+      state.response = false;
+      let message = action.error.message;
+      let length = message.length;
+      if (message.slice(length-3, length+1) === "400") {
+        state.error = "Email does not exist.";
+      }
+      else {
+        state.error = "Wrong passwords.";
+      }
     },
+    [findSellerLoginThunk.pending]:
+    (state) => {
+      state.currentUser = null;
+      state.currentReview = [];
+      state.currentFollowing = [];
+      state.currentFollower = [];
+      state.currentSell = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findSellerLoginThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentUser = payload;
+      state.loading = false;
+    },
+    [findSellerLoginThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      let message = action.error.message;
+      let length = message.length;
+      if (message.slice(length-3, length+1) === "400") {
+        state.error = "Email does not exist.";
+      }
+      else {
+        state.error = "Wrong passwords.";
+      }
+    },
+
+
+
+
     // view customer profile
     [findCustomerIdThunk.pending]:
     (state) => {
@@ -100,32 +183,8 @@ const slice = createSlice({
 
 
 
-    [deleteTuitThunk.fulfilled]:
-    (state, { payload }) => {
-      state.loading = false;
-      state.tuits = state.tuits.filter(t => t._id !== payload);
-    },
-    [createTuitThunk.fulfilled]:
-    (state, { payload }) => {
-      state.loading = false;
-      // state.tuits.push(payload);
-      state.tuits.unshift(payload);
-    },
-    [updateTuitThunk.fulfilled]:
-    (state, { payload }) => {
-      state.loading = false;
-      const tuit = state.tuits.find(tuit => tuit._id === payload._id);
-      tuit.liked = !tuit.liked;
-      tuit.likes = (tuit.liked === true) ? tuit.likes + 1 : tuit.likes - 1;
-    },
-    [dislikeTuitThunk.fulfilled]:
-    (state, { payload }) => {
-      state.loading = false;
-      const tuit = state.tuits.find(tuit => tuit._id === payload._id);
-      tuit.disliked = !tuit.disliked;
-      tuit.dislikes = (tuit.disliked === true) ? tuit.dislikes + 1 : tuit.dislikes - 1;
-    }
+    
   },
 });
 export default slice.reducer;
-export const {logout} = userSlice.actions;
+export const {resetError, logout} = slice.actions;

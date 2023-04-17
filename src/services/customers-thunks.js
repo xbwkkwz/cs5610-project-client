@@ -2,7 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import * as service from "./customers-service";
 
 
-// input >> {"email", "password", "name"}
+// input >> {"email", "password", "name", "role"}
 // output >> {full json with _id} or error json
 export const createCustomerThunk = createAsyncThunk(
   'customers/createCustomer',
@@ -16,8 +16,8 @@ export const createCustomerThunk = createAsyncThunk(
 // output >> {full json with _id} or error json
 export const findCustomerLoginThunk = createAsyncThunk(
   'customers/findCustomerLogin',
-  async (email, password) => {
-    const customer = await service.find_customer_login(email, password);
+  async (user) => {
+    const customer = await service.find_customer_login(user.email, user.password);
     return customer;
   }
 );

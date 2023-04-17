@@ -16,8 +16,8 @@ export const createSellerThunk = createAsyncThunk(
 // output >> {full json with _id} or error json
 export const findSellerLoginThunk = createAsyncThunk(
   'sellers/findSellerLogin',
-  async (email, password) => {
-    const seller = await service.find_seller_login(email, password);
+  async (user) => {
+    const seller = await service.find_seller_login(user.email, user.password);
     return seller;
   }
 );

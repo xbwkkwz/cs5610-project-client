@@ -19,20 +19,22 @@ const SearchList = () => {
   };
   
   const searchClickHandler = () => {
+    if (search === "") {return}
     dispatch(searchMovieTitleThunk(search));
   };
   
   return(
     <>
-      <div className="position-relative">
-        <input placeholder="Search Movies" 
-          className="form-control rounded-pill ps-5"
-          onChange={() => {searchChangeHandler()}}
+      <form className="d-flex mb-2">
+        <input className="form-control me-2"
+          type="search"
+          placeholder="Search Movies" 
+          onChange={searchChangeHandler}
         />
-        <i className="bi bi-search"
-          onClick={() => {searchClickHandler()}}
-        ></i>
-      </div>
+        <div className="btn btn-outline-primary"
+          onClick={searchClickHandler}
+        >Search</div>
+      </form>
 
       {loading && <div>Searching...</div>}
       {!loading && !response && <div>{error}</div>}
