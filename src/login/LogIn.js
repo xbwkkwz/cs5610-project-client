@@ -85,10 +85,14 @@ const LogIn = () => {
             onClick={LoginClickHandler}
           >Login</div>
         </form>
-
-        <Link to="/" className="text-secondary" 
-          style={{textDecorationLine:"none"}}
-          onClick={backHomeClickHandler}>Back to home page</Link>
+        <div className="d-flex justify-content-between">
+          <Link to="/" className="text-secondary" 
+            style={{textDecorationLine:"none"}}
+            onClick={backHomeClickHandler}>Back to home page</Link>
+          <Link to="/signup" className="text-success" 
+            style={{textDecorationLine:"none"}}
+            onClick={backHomeClickHandler}>Signup</Link>
+        </div>
       </li>
     </div>
     {/* {currentUser && redirect("/")} */}

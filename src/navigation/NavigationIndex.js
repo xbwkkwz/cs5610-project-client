@@ -26,9 +26,10 @@ const NavigationComponent = () => {
   return (
     <>
       <div className="list-group mb-2">
-        <Link to="/" className="list-group-item">
-          <i className="bi bi-align-top" title="OMDb"></i>
-        </Link>
+        <div className="list-group-item text-success">
+          <i className="bi bi-film" title="OMDb"><span className="d-none d-xl-inline"> OMDb </span></i>
+          <i className="bi bi-film d-none d-xl-inline" title="OMDb"></i>
+        </div>
 
         <Link to="/" className={`list-group-item ${active === '' ? 'active' : ''}`}>
           <i className="bi bi-house" title="Home"></i>
@@ -42,7 +43,7 @@ const NavigationComponent = () => {
           <i className="bi bi-bell" title="Notifications"></i>
           <span className="d-none d-xl-inline"> Profile</span></Link>
 
-        <Link to="/store" className={`list-group-item ${active === 'store' ? 'active' : ''}`}>
+        <Link to="/setting" className={`list-group-item ${active === 'setting' ? 'active' : ''}`}>
           <i className="bi bi-envelope" title="Messages"></i>
           <span className="d-none d-xl-inline"> Store</span></Link>
 
@@ -51,8 +52,8 @@ const NavigationComponent = () => {
           <span className="d-none d-xl-inline"> Bookmarks</span></Link>
       </div>
       {!currentUser && <Link to="/signup" className="d-grid btn btn-secondary rounded-pill mb-2">Signup</Link>}
-      {!currentUser && <Link to="/login" className="d-grid btn btn-primary rounded-pill">Login</Link>}
-      {currentUser && <div className="d-grid btn btn-primary rounded-pill" onClick={logoutClickHandler}>Logout</div>}
+      {!currentUser && <Link to="/login" className="d-grid btn btn-success rounded-pill">Login</Link>}
+      {currentUser && <div className="d-grid btn btn-success rounded-pill" onClick={logoutClickHandler}>Logout</div>}
     </>
   );
 };

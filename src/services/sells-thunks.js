@@ -30,6 +30,15 @@ export const findSellerSellsThunk = createAsyncThunk(
   }
 );
 
+// could return empty array
+export const findOtherSellsThunk = createAsyncThunk(
+  'sells/findOtherSells', // unique thunk identifier
+  async (sellerId) => {
+    const sells = await service.find_seller_sells(sellerId);
+    return sells;
+  }
+);
+
 // input >> {"_id", "price"}
 // return the input again
 export const updateSellThunk = createAsyncThunk(

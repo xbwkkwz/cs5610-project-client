@@ -1,10 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
+
 import {
   createCustomerThunk, 
   findCustomerLoginThunk,
   findCustomerIdThunk, 
   findCustomerFollowingThunk, 
   findCustomerFollowerThunk,
+  findOtherFollowingThunk,
+  findOtherFollowerThunk,
   updateCustomerThunk,
   updateFollowThunk,
   deleteCustomerThunk
@@ -19,18 +22,17 @@ import {
 } from "../services/sellers-thunks";
 
 
-const initialState = {
-  currentUser: null,
-  currentReview: [],
-  currentFollowing: [],
-  currentFollower: [],
-  currentSell: [],
 
-  otherUser: null,
-  otherReview: [],
-  otherFollowing: [],
-  otherFollower: [],
-  otherSell: [],
+// import {} from "../services/sells-thunks";
+
+const initialState = {
+  currentUser: null, //ok
+  currentFollowing: [], //ok
+  currentFollower: [], //ok
+
+  otherUser: null, //ok
+  otherFollowing: [], //ok
+  otherFollower: [], //ok
 
   loading: false,
   response: true,
@@ -38,10 +40,10 @@ const initialState = {
 };  
 
 const slice = createSlice({
-  name: 'currentUser',
+  name: 'user',
   initialState: initialState,
   reducers: {
-    // reset response
+    // reset error response
     resetError(state, action) {
       state.response = true;
       state.error = "";
@@ -49,6 +51,8 @@ const slice = createSlice({
     // logout
     logout(state, action) {
       state.currentUser = null;
+      state.currentFollowing = [];
+      state.currentFollower = [];
       state.loading = false;
       state.response = true;
       state.error = "";
@@ -59,10 +63,8 @@ const slice = createSlice({
     [createCustomerThunk.pending]:
     (state) => {
       state.currentUser = null;
-      state.currentReview = [];
       state.currentFollowing = [];
       state.currentFollower = [];
-      state.currentSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -81,10 +83,8 @@ const slice = createSlice({
     [createSellerThunk.pending]:
     (state) => {
       state.currentUser = null;
-      state.currentReview = [];
       state.currentFollowing = [];
       state.currentFollower = [];
-      state.currentSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -100,14 +100,13 @@ const slice = createSlice({
       state.response = false;
       state.error = "Email exists."; // action: {payload, error, ...}
     },
+
     // login 
     [findCustomerLoginThunk.pending]:
     (state) => {
       state.currentUser = null;
-      state.currentReview = [];
       state.currentFollowing = [];
       state.currentFollower = [];
-      state.currentSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -133,10 +132,8 @@ const slice = createSlice({
     [findSellerLoginThunk.pending]:
     (state) => {
       state.currentUser = null;
-      state.currentReview = [];
       state.currentFollowing = [];
       state.currentFollower = [];
-      state.currentSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -160,30 +157,225 @@ const slice = createSlice({
       }
     },
 
+    // view customer self following
+    [findCustomerFollowingThunk.pending]:
+    (state) => {
+      state.currentFollowing = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findCustomerFollowingThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentFollowing = payload;
+      state.loading = false;
+    },
+    [findCustomerFollowingThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // view customer self follower
+    [findCustomerFollowerThunk.pending]:
+    (state) => {
+      state.currentFollower = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findCustomerFollowerThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentFollower = payload;
+      state.loading = false;
+    },
+    [findCustomerFollowerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
 
+    // view other following
+    [findOtherFollowingThunk.pending]:
+    (state) => {
+      state.otherFollowing = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findOtherFollowingThunk.fulfilled]:
+    (state, { payload }) => {
+      state.otherFollowing = payload;
+      state.loading = false;
+    },
+    [findOtherFollowingThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // view other follower
+    [findOtherFollowerThunk.pending]:
+    (state) => {
+      state.otherFollower = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findOtherFollowerThunk.fulfilled]:
+    (state, { payload }) => {
+      state.otherFollower = payload;
+      state.loading = false;
+    },
+    [findOtherFollowerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
 
-
-    // view customer profile
+    // view other customer profile
     [findCustomerIdThunk.pending]:
     (state) => {
+      state.otherUser = null;
+      state.otherFollowing = [];
+      state.otherFollower = [];
       state.loading = true;
-      state.currentUser = null;
+      state.response = true;
+      state.error = "";
     },
     [findCustomerIdThunk.fulfilled]:
     (state, { payload }) => {
+      state.otherUser = payload;
       state.loading = false;
-      state.currentUser = payload;
     },
     [findCustomerIdThunk.rejected]:
     (state, action) => {
       state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // view other seller profile
+    [findSellerIdThunk.pending]:
+    (state) => {
+      state.otherUser = null;
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findSellerIdThunk.fulfilled]:
+    (state, { payload }) => {
+      state.otherUser = payload;
+      state.loading = false;
+    },
+    [findSellerIdThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
       state.error = action.error;
     },
 
+    // update current customer profile
+    [updateCustomerThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [updateCustomerThunk.fulfilled]:
+    (state, { payload }) => { // payload is not a full profile
+      state.currentUser = {...state.currentUser, ...payload};
+      state.loading = false;
+    },
+    [updateCustomerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // update current seller profile
+    [updateSellerThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [updateSellerThunk.fulfilled]:
+    (state, { payload }) => { // payload is not a full profile
+      state.currentUser = {...state.currentUser, ...payload};
+      state.loading = false;
+    },
+    [updateSellerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
 
-
-
+    // update following and follower list, A is current user, B is other profile
+    // followList >> {"idA": "...", "A": [], "idB": "...", "B": []}
+    [updateFollowThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [updateFollowThunk.fulfilled]:
+    (state, { payload }) => { 
+      state.currentUser.following = payload.A;
+      state.otherUser.follower = payload.B;
+      state.loading = false;
+    },
+    [updateFollowThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
     
+    // delete current customer account
+    // step 1, delelte reviews
+    // step 2, delete follow relationship
+    // step 3, delte account id
+    [deleteCustomerThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [deleteCustomerThunk.fulfilled]:
+    (state, { payload }) => { 
+      state.currentUser = null; // equal to logout
+      state.loading = false;
+    },
+    [deleteCustomerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // delete current seller account
+    // step 1, delelte sells
+    // step 2, delte account id
+    [deleteSellerThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [deleteSellerThunk.fulfilled]:
+    (state, { payload }) => { 
+      state.currentUser = null; // equal to logout
+      state.loading = false;
+    },
+    [deleteSellerThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+
   },
 });
 export default slice.reducer;

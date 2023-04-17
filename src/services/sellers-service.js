@@ -20,8 +20,8 @@ export const create_seller = async (seller) => {
 
 // login by email and password
 // input >> {"email", "password"}
-export const find_seller_login = async (email, password) => {
-  const response = await axios.get(`${MONGO_API}/sellers?email=${email}&password=${password}`);
+export const find_seller_login = async (user) => {
+  const response = await axios.get(`${MONGO_API}/sellers?email=${user.email}&password=${user.password}`);
   // response is seller >> {"_id", "email", "password", "name", "bio", ...more}
   // or error
   return response.data;

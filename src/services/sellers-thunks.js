@@ -17,7 +17,7 @@ export const createSellerThunk = createAsyncThunk(
 export const findSellerLoginThunk = createAsyncThunk(
   'sellers/findSellerLogin',
   async (user) => {
-    const seller = await service.find_seller_login(user.email, user.password);
+    const seller = await service.find_seller_login(user);
     return seller;
   }
 );

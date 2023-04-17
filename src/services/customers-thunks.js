@@ -17,7 +17,7 @@ export const createCustomerThunk = createAsyncThunk(
 export const findCustomerLoginThunk = createAsyncThunk(
   'customers/findCustomerLogin',
   async (user) => {
-    const customer = await service.find_customer_login(user.email, user.password);
+    const customer = await service.find_customer_login(user);
     return customer;
   }
 );
@@ -46,6 +46,26 @@ export const findCustomerFollowingThunk = createAsyncThunk(
 // output >> array of people json or empty []
 export const findCustomerFollowerThunk = createAsyncThunk(
   'customers/findCustomerFollower',
+  async (customerId) => {
+    const customers = await service.find_customer_follower(customerId);
+    return customers;
+  }
+);
+
+// find followings for other profiles
+// output >> array of people json or empty []
+export const findOtherFollowingThunk = createAsyncThunk(
+  'customers/findOtherFollowing',
+  async (customerId) => {
+    const customers = await service.find_customer_following(customerId);
+    return customers;
+  }
+);
+
+// find followers for other profiles
+// output >> array of people json or empty []
+export const findOtherFollowerThunk = createAsyncThunk(
+  'customers/findOtherFollower',
   async (customerId) => {
     const customers = await service.find_customer_follower(customerId);
     return customers;

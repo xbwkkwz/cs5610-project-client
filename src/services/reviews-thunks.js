@@ -30,6 +30,15 @@ export const findCustomerReviewsThunk = createAsyncThunk(
   }
 );
 
+// could return empty array
+export const findOtherReviewsThunk = createAsyncThunk(
+  'reviews/findOtherReviews', // unique thunk identifier
+  async (customerid) => {
+    const reviews = await service.find_customer_reviews(customerid);
+    return reviews;
+  }
+);
+
 // input >> {"_id", "content", "rating"}
 // return the input again
 export const updateReviewThunk = createAsyncThunk(

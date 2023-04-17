@@ -20,8 +20,8 @@ export const create_customer = async (customer) => {
 
 // login by email and password
 // input >> {"email", "password"}
-export const find_customer_login = async (email, password) => {
-  const response = await axios.get(`${MONGO_API}/customers?email=${email}&password=${password}`);
+export const find_customer_login = async (user) => {
+  const response = await axios.get(`${MONGO_API}/customers?email=${user.email}&password=${user.password}`);
   // response is customer >> {"_id", "email", "password", "name", "bio", ...more}
   // or error
   return response.data;
