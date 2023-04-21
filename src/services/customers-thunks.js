@@ -83,7 +83,7 @@ export const updateCustomerThunk = createAsyncThunk(
 );
 
 // update following and follower
-// followList >> {"idA": "...", "A": [], "idB": "...", "B": []}
+// followList >> {"idA": "...", "A": {"following": []}, "idB": "...", "B": {"follower": []}}
 // return input again
 export const updateFollowThunk = createAsyncThunk(
   'customers/updateFollow',

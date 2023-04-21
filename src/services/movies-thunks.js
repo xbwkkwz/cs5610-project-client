@@ -21,3 +21,15 @@ export const searchMovieIdThunk = createAsyncThunk(
   }
 );
 
+// return random movie list
+export const searchRandomIdThunk = createAsyncThunk(
+  'movies/searchRandom', // unique thunk identifier
+  async (imdbIDArray) => {
+    let randomMovieList = [];
+    for (let i=0; i<imdbIDArray.length; i++) {
+      const movie = await service.search_movie_id(imdbIDArray[i]);
+      randomMovieList.push(movie);
+    }
+    return randomMovieList;
+  }
+);

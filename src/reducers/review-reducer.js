@@ -49,7 +49,7 @@ const slice = createSlice({
     // find reviews for one movie
     [findMovieReviewsThunk.pending]:
     (state) => {
-      state.movieReview = [];
+      // state.movieReview = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -69,7 +69,7 @@ const slice = createSlice({
     // find reviews for current user
     [findCustomerReviewsThunk.pending]:
     (state) => {
-      state.currentReview = [];
+      // state.currentReview = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -89,7 +89,7 @@ const slice = createSlice({
     // find reviews for other profile
     [findOtherReviewsThunk.pending]:
     (state) => {
-      state.otherReview = [];
+      // state.otherReview = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -135,6 +135,7 @@ const slice = createSlice({
     },
     [deleteReviewThunk.fulfilled]:
     (state, { payload }) => {
+      state.movieReview = state.movieReview.filter(r => r._id !== payload);
       state.currentReview = state.currentReview.filter(r => r._id !== payload);
       state.loading = false;
     },

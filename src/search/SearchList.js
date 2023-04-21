@@ -28,7 +28,7 @@ const SearchList = () => {
       <form className="d-flex mb-2">
         <input className="form-control me-2"
           type="search"
-          placeholder="Search Movies" 
+          placeholder="Search movie, series, episode" 
           onChange={searchChangeHandler}
         />
         <div className="btn btn-outline-primary"
@@ -36,10 +36,10 @@ const SearchList = () => {
         >Search</div>
       </form>
 
-      {loading && <div>Searching...</div>}
+      {loading && <div className="mb-2">Searching...</div>}
       {!loading && !response && <div>{error}</div>}
       <ul className="list-group">
-        {!loading && response && movieList.map(m => <SearchItem key={m.imdbID} movie={m}/>)}
+        {response && movieList.map(m => <SearchItem key={m.imdbID} movie={m}/>)}
       </ul>
     </>
   );

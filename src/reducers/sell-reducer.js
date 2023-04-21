@@ -47,7 +47,7 @@ const slice = createSlice({
     // find sells for one movie
     [findMovieSellsThunk.pending]:
     (state) => {
-      state.movieSell = [];
+      // state.movieSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -67,7 +67,7 @@ const slice = createSlice({
     // find sells for current user
     [findSellerSellsThunk.pending]:
     (state) => {
-      state.currentSell = [];
+      // state.currentSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -87,7 +87,7 @@ const slice = createSlice({
     // find sells for other profile
     [findOtherSellsThunk.pending]:
     (state) => {
-      state.otherSell = [];
+      // state.otherSell = [];
       state.loading = true;
       state.response = true;
       state.error = "";
@@ -133,6 +133,7 @@ const slice = createSlice({
     },
     [deleteSellThunk.fulfilled]:
     (state, { payload }) => {
+      state.movieSell = state.movieSell.filter(s => s._id !== payload);
       state.currentSell = state.currentSell.filter(s => s._id !== payload);
       state.loading = false;
     },

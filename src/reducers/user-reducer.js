@@ -36,7 +36,10 @@ const initialState = {
 
   loading: false,
   response: true,
-  error: ""
+  error: "",
+  floading: false,
+  fresponse: true,
+  ferror: ""
 };  
 
 const slice = createSlice({
@@ -160,79 +163,79 @@ const slice = createSlice({
     // view customer self following
     [findCustomerFollowingThunk.pending]:
     (state) => {
-      state.currentFollowing = [];
-      state.loading = true;
-      state.response = true;
-      state.error = "";
+      // state.currentFollowing = [];
+      state.floading = true;
+      state.fresponse = true;
+      state.ferror = "";
     },
     [findCustomerFollowingThunk.fulfilled]:
     (state, { payload }) => {
-      state.currentFollowing = payload;
-      state.loading = false;
+      state.currentFollowing = payload.reverse(); // the order is reversed, newer first
+      state.floading = false;
     },
     [findCustomerFollowingThunk.rejected]:
     (state, action) => {
-      state.loading = false;
-      state.response = false;
-      state.error = action.error;
+      state.floading = false;
+      state.fresponse = false;
+      state.ferror = action.error;
     },
     // view customer self follower
     [findCustomerFollowerThunk.pending]:
     (state) => {
-      state.currentFollower = [];
-      state.loading = true;
-      state.response = true;
-      state.error = "";
+      // state.currentFollower = [];
+      state.floading = true;
+      state.fresponse = true;
+      state.ferror = "";
     },
     [findCustomerFollowerThunk.fulfilled]:
     (state, { payload }) => {
-      state.currentFollower = payload;
-      state.loading = false;
+      state.currentFollower = payload.reverse(); // the order is reversed, newer first
+      state.floading = false;
     },
     [findCustomerFollowerThunk.rejected]:
     (state, action) => {
-      state.loading = false;
-      state.response = false;
-      state.error = action.error;
+      state.floading = false;
+      state.fresponse = false;
+      state.ferror = action.error;
     },
 
     // view other following
     [findOtherFollowingThunk.pending]:
     (state) => {
-      state.otherFollowing = [];
-      state.loading = true;
-      state.response = true;
-      state.error = "";
+      // state.otherFollowing = [];
+      state.floading = true;
+      state.fresponse = true;
+      state.ferror = "";
     },
     [findOtherFollowingThunk.fulfilled]:
     (state, { payload }) => {
-      state.otherFollowing = payload;
-      state.loading = false;
+      state.otherFollowing = payload.reverse(); // the order is reversed, newer first
+      state.floading = false;
     },
     [findOtherFollowingThunk.rejected]:
     (state, action) => {
-      state.loading = false;
-      state.response = false;
-      state.error = action.error;
+      state.floading = false;
+      state.fresponse = false;
+      state.ferror = action.error;
     },
     // view other follower
     [findOtherFollowerThunk.pending]:
     (state) => {
-      state.otherFollower = [];
-      state.loading = true;
-      state.response = true;
-      state.error = "";
+      // state.otherFollower = [];
+      state.floading = true;
+      state.fresponse = true;
+      state.ferror = "";
     },
     [findOtherFollowerThunk.fulfilled]:
     (state, { payload }) => {
-      state.otherFollower = payload;
-      state.loading = false;
+      state.otherFollower = payload.reverse(); // the order is reversed, newer first
+      state.floading = false;
     },
     [findOtherFollowerThunk.rejected]:
     (state, action) => {
-      state.loading = false;
-      state.response = false;
-      state.error = action.error;
+      state.floading = false;
+      state.fresponse = false;
+      state.ferror = action.error;
     },
 
     // view other customer profile
@@ -314,24 +317,34 @@ const slice = createSlice({
     },
 
     // update following and follower list, A is current user, B is other profile
-    // followList >> {"idA": "...", "A": [], "idB": "...", "B": []}
+    // followList >> {"idA": "...", "A": {"following": []}, "idB": "...", "B": {"follower": []}}
     [updateFollowThunk.pending]:
     (state) => {
-      state.loading = true;
-      state.response = true;
-      state.error = "";
+      state.floading = true;
+      state.fresponse = true;
+      state.ferror = "";
     },
     [updateFollowThunk.fulfilled]:
     (state, { payload }) => { 
-      state.currentUser.following = payload.A;
-      state.otherUser.follower = payload.B;
-      state.loading = false;
+      // unfollow someone
+      if (state.currentFollowing.length > payload.A.following) {
+        state.currentFollowing = state.currentFollowing.filter(c => payload.A.following.includes(c._id));
+        state.otherFollower = state.otherFollower.filter(c => payload.B.follower.includes(c._id));
+      }
+      // follow someone
+      else {
+        state.currentFollowing = [...[state.otherUser], ...state.currentFollowing];
+        state.otherFollower = [...[state.currentUser], ...state.otherFollower];
+      }
+      state.currentUser.following = payload.A.following;
+      state.otherUser.follower = payload.B.follower;
+      state.floading = false;
     },
     [updateFollowThunk.rejected]:
     (state, action) => {
-      state.loading = false;
-      state.response = false;
-      state.error = action.error;
+      state.floading = false;
+      state.fresponse = false;
+      state.ferror = action.error;
     },
     
     // delete current customer account

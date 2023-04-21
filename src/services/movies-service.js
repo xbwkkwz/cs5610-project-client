@@ -11,7 +11,7 @@ const OMDB_API = "https://www.omdbapi.com/?apikey=5675ff02";
 // response is a json with 3 fields {"Search":[], "totalResults":"2", "Response":"True"}
 // or no data >> {"Response":"False", "Error":"Movie not found!"}
 export const search_movie_title = async (title) => {
-  const str = encodeURI(title);
+  const str = encodeURI(title.trim());
   const response = await axios.get(`${OMDB_API}&s=${str}`);
   return response.data;
 }

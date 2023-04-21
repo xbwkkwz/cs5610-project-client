@@ -59,7 +59,7 @@ export const update_customer = async (customer) => {
 }
 
 // follow or unfollow one customer
-// followList >> {"idA": "...", "A": [], "idB": "...", "B": []}
+// followList >> {"idA": "...", "A": {"following": []}, "idB": "...", "B": {"follower": []}}
 export const update_follow = async (followList) => {
   const response = await axios.put(`${MONGO_API}/customers/follow/${followList.idA}/${followList.idB}`, followList);
   // response is 200, not used
