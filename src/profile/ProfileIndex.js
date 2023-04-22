@@ -1,15 +1,10 @@
 import React from "react";
-import {useLocation, Routes, Route} from "react-router";
+import {Routes, Route} from "react-router";
 
 
 import CustomerInfo from "./CustomerInfo";
 
 const ProfileComponent = () => {
-  // find path info, /profile/customer or seller
-  // const {pathname} = useLocation();
-  // const paths = pathname.split('/');
-
-
 
   return (
     <>

@@ -113,8 +113,8 @@ const slice = createSlice({
     },
     [updateSellThunk.fulfilled]:
     (state, { payload }) => {
-      let tempSell = state.currentSell.find(s => s._id === payload._id);
-      tempSell = {...tempSell, ...payload};
+      let index = state.currentSell.findIndex(s => s._id === payload._id);
+      state.currentSell[index] = {...state.currentSell[index], ...payload};
       state.loading = false;
     },
     [updateSellThunk.rejected]:
