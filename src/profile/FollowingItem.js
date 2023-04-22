@@ -25,8 +25,9 @@ const FollowingItem = ({customer}) => { // change this to customer
     let A = currentUser.following.filter(cid => cid !== customer._id);
     let B = customer.follower.filter(cid => cid !== currentUser._id);
     let followList = {"idA": currentUser._id, "A": {"following": A}, "idB": customer._id, "B": {"follower": B}};
-    // ask computer to load the user first
+    // if directly access the self profile, there is no other user yet
     dispatch(findCustomerIdThunk(customer._id));
+    // update the data
     dispatch(updateFollowThunk(followList));
     // dispatch(findCustomerFollowingThunk(currentUser._id));
     // dispatch(findCustomerFollowingThunk(currentUser._id));

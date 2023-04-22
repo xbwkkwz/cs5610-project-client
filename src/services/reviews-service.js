@@ -34,7 +34,7 @@ export const find_customer_reviews = async (customerId) => {
 // get reviews for my following
 // response is json lists, can empty
 export const find_following_reviews = async (customeridArray) => {
-  const idArrayStr = customeridArray.join(',');
+  const idArrayStr = (customeridArray.length === 0) ? "," : customeridArray.join(',');
   const response = await axios.get(`${MONGO_API}/reviews/customerFollowing/${idArrayStr}`);
   return response.data;
 }

@@ -15,6 +15,7 @@ import LoginComponent from "./login/LogInIndex";
 import HomeComponent from "./home/HomeIndex";
 import SearchComponent from "./search/SearchIndex"
 import DetailComponent from "./detail/DetailIndex";
+import FollowingComponent from "./following/FollowingIndex";
 import ProfileComponent from "./profile/ProfileIndex";
 
 import SideBarComponent from "./sidebar/SideBarIndex";
@@ -48,10 +49,7 @@ const Website = () => {
             <Route path="/search" element={<SearchComponent/>}/>
             <Route path="/details/*" element={<DetailComponent/>}/>
             <Route path="/profile/*" element={<ProfileComponent/>}/>
-
-            {/* <Route path="explore" element={<ExploreComponent/>}/>
-            <Route path="profile" element={<ProfileComponent/>}/>
-            <Route path="edit-profile" element={<EditProfile/>}/> */}
+            <Route path="/following" element={<FollowingComponent/>}/>
           </Routes>
         </div>
         
