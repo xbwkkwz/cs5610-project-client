@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { findCustomerIdThunk } from "../services/customers-thunks";
 import { findOtherReviewsThunk } from "../services/reviews-thunks";
 import { updateFollowThunk } from "../services/customers-thunks";
-import { findCustomerFollowerThunk } from "../services/customers-thunks";
+// import { findCustomerFollowerThunk } from "../services/customers-thunks";
 
 const FollowerItem = ({customer}) => { // change this to customer
 

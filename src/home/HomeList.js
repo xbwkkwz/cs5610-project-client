@@ -20,6 +20,8 @@ const HomeList = () => {
 
   const refreshOnClickHandler = () => {
     dispatch(getRandomMovies());
+    // use auto render, no need this
+    // dispatch(searchRandomIdThunk(imdbIDArray));
   };
 
   return (

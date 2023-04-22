@@ -29,45 +29,53 @@ import FollowerList from "./FollowerList";
 import DetailSellList from "../detail/DetailSellList";
 
 
+
 const CustomerInfo= () => {
   // find path info, /profile/customer or seller/id/reviews or followings or followers or sells
   const {pathname} = useLocation();
   const paths = pathname.split('/');
   const pathsLength = paths.length;
+  const pathsRole = paths[2];
   let userid = "";
   if (pathsLength === 5) {
     userid = paths[3];
   }
-  
+
   // load initial user data from reducer
   const {currentUser, otherUser, loading, response, error} = useSelector(state => state.usersData);
-  const currentid = currentUser ? currentUser._id : null;
-
+  // const currentid = currentUser ? currentUser._id : null;
+  
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   // auto load for current customer
   useEffect(() => {
-    if (pathsLength === 4 && paths[2] === "customer") {
-      dispatch(findCustomerReviewsThunk(currentid));
-      dispatch(findCustomerFollowingThunk(currentid));
-      dispatch(findCustomerFollowerThunk(currentid));
+    // update the dependency problem last!!!!!!!!!!
+    if (currentUser && pathsLength === 4 && pathsRole === "customer") {
+      dispatch(findCustomerReviewsThunk(currentUser._id));
+      dispatch(findCustomerFollowingThunk(currentUser._id));
+      dispatch(findCustomerFollowerThunk(currentUser._id));
     }
-    else if (pathsLength === 4 && paths[2] === "seller") {
-      dispatch(findSellerSellsThunk(currentid));
+    else if (currentUser && pathsLength === 4 && pathsRole === "seller") {
+      dispatch(findSellerSellsThunk(currentUser._id));
     }
-    else if (pathsLength === 5 && paths[2] === "customer"){
+    else if (pathsLength === 5 && pathsRole === "customer"){
       dispatch(findCustomerIdThunk(userid));
       dispatch(findOtherReviewsThunk(userid));
       dispatch(findOtherFollowingThunk(userid));
       dispatch(findOtherFollowerThunk(userid));
     } 
-    else if (pathsLength === 5 && paths[2] === "seller") {
+    else if (pathsLength === 5 && pathsRole === "seller") {
       dispatch(findSellerIdThunk(userid));
       dispatch(findOtherSellsThunk(userid));
     }
-  }, [dispatch]);
-  // paths, pathsLength, currentid, userid, 
-  // paths, pathsLength, currentid, userid, dispatch
+  }, [currentUser, pathsLength, pathsRole, userid, dispatch]); // use auto redner
+  
+
+  // redirect to home page
+  useEffect(() => {
+    if (!currentUser && pathsLength === 4) nav("/login");
+  });
   
   // which data to display
   let user = null;
@@ -85,7 +93,15 @@ const CustomerInfo= () => {
     let B = otherUser.follower.slice()
     B.push(currentUser._id);
     let followList = {"idA": currentUser._id, "A": {"following": A}, "idB": otherUser._id, "B": {"follower": B}};
+    // if directly access the self profile, there is no other user yet
+    dispatch(findCustomerIdThunk(otherUser._id));
+    // update the data
     dispatch(updateFollowThunk(followList));
+    // need to render twice to see the result, do not know why
+    // dispatch(findOtherFollowerThunk(otherUser._id));
+    // dispatch(findOtherFollowerThunk(otherUser._id));
+    // dispatch(findCustomerFollowingThunk(currentUser._id));
+    // dispatch(findCustomerFollowingThunk(currentUser._id));
   };
 
   // followList >> {"idA": "...", "A": {"following": []}, "idB": "...", "B": {"follower": []}}
@@ -93,15 +109,18 @@ const CustomerInfo= () => {
     let A = currentUser.following.filter(cid => cid !== otherUser._id);
     let B = otherUser.follower.filter(cid => cid !== currentUser._id);
     let followList = {"idA": currentUser._id, "A": {"following": A}, "idB": otherUser._id, "B": {"follower": B}};
-    // ask computer to load the user first
+    // if directly access the self profile, there is no other user yet
     dispatch(findCustomerIdThunk(otherUser._id));
+    // update the data
     dispatch(updateFollowThunk(followList));
+    // need to render twice to see the result, do not know why
+    // dispatch(findOtherFollowerThunk(otherUser._id));
+    // dispatch(findOtherFollowerThunk(otherUser._id));
     // dispatch(findCustomerFollowingThunk(currentUser._id));
     // dispatch(findCustomerFollowingThunk(currentUser._id));
   };
-
+  
   // go back to visit history
-  const nav = useNavigate();
   const backClickHandler = () => {
     nav(-1);
   }
@@ -126,7 +145,7 @@ const CustomerInfo= () => {
                 <div className="btn btn-outline-warning" onClick={unfollowClickHandler} title="Unfollow this profile"><i className="bi bi-x-square"></i> Unfollow</div>}
             </div>
             <div className="ms-auto">
-              {pathsLength === 4 && <Link to="/profile/edit" className="btn btn-outline-primary rounded-pill">Edit profile</Link>}
+              {pathsLength === 4 && <Link to="/edit/profile" className="btn btn-outline-primary rounded-pill">Edit profile</Link>}
             </div>
           </div>
 

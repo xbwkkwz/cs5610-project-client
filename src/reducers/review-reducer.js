@@ -5,6 +5,7 @@ import {
   findMovieReviewsThunk,
   findCustomerReviewsThunk,
   findOtherReviewsThunk,
+  findFollowingReviewsThunk,
   updateReviewThunk,
   deleteReviewThunk,
   deleteAllReviewsThunk
@@ -14,7 +15,6 @@ const initialState = {
   movieReview: [], //ok
   currentReview: [], //ok
   otherReview: [], //ok
-  recentReview: [],
   followingReview: [],
 
   loading: false,
@@ -106,6 +106,26 @@ const slice = createSlice({
       state.error = action.error; // action: {payload, error, ...}
     },
 
+    // get reviews for my followings
+    [findFollowingReviewsThunk.pending]:
+    (state) => {
+      // state.followingReview = [];
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findFollowingReviewsThunk.fulfilled]:
+    (state, { payload }) => {
+      state.followingReview = payload.reverse(); // the order is reversed, newer first
+      state.loading = false;
+    },
+    [findFollowingReviewsThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error; // action: {payload, error, ...}
+    },
+
     // update one review
     [updateReviewThunk.pending]:
     (state) => {
@@ -115,8 +135,8 @@ const slice = createSlice({
     },
     [updateReviewThunk.fulfilled]:
     (state, { payload }) => {
-      let tempReview = state.currentReview.find(r => r._id === payload._id);
-      tempReview = {...tempReview, ...payload};
+      let index = state.currentReview.findIndex(r => r._id === payload._id);
+      state.currentReview[index] = {...state.currentReview[index], ...payload};
       state.loading = false;
     },
     [updateReviewThunk.rejected]:
@@ -165,17 +185,6 @@ const slice = createSlice({
       state.response = false;
       state.error = action.error; // action: {payload, error, ...}
     },
-
-    // get recent 20 reviews across all users
-
-
-
-
-
-    // get reviews for my followings
-
-
-
 
   }
 });

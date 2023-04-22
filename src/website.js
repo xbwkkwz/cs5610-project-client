@@ -7,8 +7,8 @@ import userReducer from "./reducers/user-reducer";
 import reviewReducer from "./reducers/review-reducer";
 import sellReducer from "./reducers/sell-reducer";
 
-
-import NavigationComponent from "./navigation/NavigationIndex"
+import CookieComponent from "./cookie/CookieIndex";
+import NavigationComponent from "./navigation/NavigationIndex";
 import SignUpComponent from "./login/SignUpIndex";
 import LoginComponent from "./login/LogInIndex";
 
@@ -27,7 +27,7 @@ const Website = () => {
   return (
     <Provider store={store}>
       <div className="row mt-2 mb-2">
-        {console.log("here is the cookie!!!!!!!!!!")}
+        <CookieComponent/>
         <div className="col-2 col-md-2 col-lg-2 col-xl-2">
           <Routes>
             <Route path="/" element={<NavigationComponent/>}/>

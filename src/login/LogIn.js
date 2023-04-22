@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import cookie from "react-cookies";
 
 import { findCustomerLoginThunk } from "../services/customers-thunks";
 import { findSellerLoginThunk } from "../services/sellers-thunks";
 import {resetError} from "../reducers/user-reducer";
+
 
 
 const LogIn = () => {
@@ -49,10 +51,16 @@ const LogIn = () => {
   };
 
 
-  // navigate to page
+  // add cookie and navigate to page
   const nav = useNavigate();
   useEffect(() => {
-    if (currentUser) nav("/");
+    if (currentUser) {
+      // for 15 minutes
+      const expires = new Date(new Date().getTime() + 15 * 60 * 1000);
+      const userInfo = {"_id": currentUser._id, "role": currentUser.role};
+      cookie.save("userInfo", userInfo, {path: "/", expires});
+      nav("/");
+    }
   }, [currentUser, nav]);
 
 

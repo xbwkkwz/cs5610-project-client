@@ -73,6 +73,25 @@ export const findOtherReviewsThunk = createAsyncThunk(
   }
 );
 
+// get my following people's reviews
+export const findFollowingReviewsThunk = createAsyncThunk(
+  'reviews/findFollowingReviews', // unique thunk identifier
+  async (customeridArray) => {
+    // step 1, get review records
+    const reviews = await service.find_following_reviews(customeridArray);
+    // step 2, get movie details and customer details
+    let fullReviews = [];
+    for (let i=0; i<reviews.length; i++) {
+      let movie = await moviesService.search_movie_id(reviews[i].movieid);
+      movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
+      let customer = await customersService.find_customer_id(reviews[i].customerid);
+      customer = {name: customer.name, bio: customer.bio, icon: customer.icon};
+      fullReviews.push({...reviews[i], ...movie, ...customer});
+    }
+    return fullReviews;
+  }
+);
+
 // input >> {"_id", "content", "rating"}
 // return the input again
 export const updateReviewThunk = createAsyncThunk(
@@ -100,3 +119,5 @@ export const deleteAllReviewsThunk = createAsyncThunk(
     return customerId;
   }
 );
+
+

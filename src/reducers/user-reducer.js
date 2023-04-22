@@ -4,6 +4,7 @@ import {
   createCustomerThunk, 
   findCustomerLoginThunk,
   findCustomerIdThunk, 
+  findCustomerCookieThunk,
   findCustomerFollowingThunk, 
   findCustomerFollowerThunk,
   findOtherFollowingThunk,
@@ -17,6 +18,7 @@ import {
   createSellerThunk,
   findSellerLoginThunk,
   findSellerIdThunk,
+  findSellerCookieThunk,
   updateSellerThunk,
   deleteSellerThunk
 } from "../services/sellers-thunks";
@@ -279,6 +281,45 @@ const slice = createSlice({
       state.error = action.error;
     },
 
+    // save cookie customer
+    [findCustomerCookieThunk.pending]:
+    (state) => {
+      state.currentUser = null;
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findCustomerCookieThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentUser = payload;
+      state.loading = false;
+    },
+    [findCustomerCookieThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+    // save cookie seller
+    [findSellerCookieThunk.pending]:
+    (state) => {
+      state.currentUser = null;
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findSellerCookieThunk.fulfilled]:
+    (state, { payload }) => {
+      state.currentUser = payload;
+      state.loading = false;
+    },
+    [findSellerCookieThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error;
+    },
+
     // update current customer profile
     [updateCustomerThunk.pending]:
     (state) => {
@@ -326,16 +367,23 @@ const slice = createSlice({
     },
     [updateFollowThunk.fulfilled]:
     (state, { payload }) => { 
-      // unfollow someone
-      if (state.currentFollowing.length > payload.A.following) {
-        state.currentFollowing = state.currentFollowing.filter(c => payload.A.following.includes(c._id));
-        state.otherFollower = state.otherFollower.filter(c => payload.B.follower.includes(c._id));
-      }
-      // follow someone
-      else {
-        state.currentFollowing = [...[state.otherUser], ...state.currentFollowing];
-        state.otherFollower = [...[state.currentUser], ...state.otherFollower];
-      }
+      // // unfollow someone, update the indenpendent following array
+      // if (state.currentFollowing.length > payload.A.following) {
+      //   // state.currentFollowing = state.currentFollowing.filter(c => payload.A.following.includes(c._id));
+      //   console.log("check after filter");
+      //   console.log(state.currentFollowing.filter(c => payload.A.following.includes(c._id)));
+      //   // state.otherFollower = state.otherFollower.filter(c => payload.B.follower.includes(c._id));
+      //   console.log(state.otherFollower.filter(c => payload.B.follower.includes(c._id)));
+      // }
+      // // follow someone, update the indenpendent follower array
+      // else {
+      //   state.currentFollowing = [...[state.otherUser], ...state.currentFollowing];
+      //   state.otherFollower = [...[state.currentUser], ...state.otherFollower];
+      // }
+      // console.log("check last");
+      // console.log(state.currentFollowing);
+      // console.log(state.otherFollower);
+      // update array in the user profile
       state.currentUser.following = payload.A.following;
       state.otherUser.follower = payload.B.follower;
       state.floading = false;

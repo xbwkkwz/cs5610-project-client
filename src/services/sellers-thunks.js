@@ -32,6 +32,16 @@ export const findSellerIdThunk = createAsyncThunk(
   }
 );
 
+// for cookie storage
+// output >> {full json with _id} or error json
+export const findSellerCookieThunk = createAsyncThunk(
+  'sellers/findSellerCookie',
+  async (sellerId) => {
+    const seller = await service.find_seller_id(sellerId);
+    return seller;
+  }
+);
+
 // update info for the seller
 // return input again
 export const updateSellerThunk = createAsyncThunk(

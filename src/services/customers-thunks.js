@@ -32,6 +32,16 @@ export const findCustomerIdThunk = createAsyncThunk(
   }
 );
 
+// for cookie storage
+// output >> {full json with _id} or error json
+export const findCustomerCookieThunk = createAsyncThunk(
+  'customers/findCustomerCookie',
+  async (customerId) => {
+    const customer = await service.find_customer_id(customerId);
+    return customer;
+  }
+);
+
 // find followings for the customer
 // output >> array of people json or empty []
 export const findCustomerFollowingThunk = createAsyncThunk(

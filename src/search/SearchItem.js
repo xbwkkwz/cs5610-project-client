@@ -1,17 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+// import {useDispatch} from "react-redux";
 
-import {searchMovieIdThunk} from "../services/movies-thunks";
-import {findMovieReviewsThunk} from "../services/reviews-thunks";
+// import {searchMovieIdThunk} from "../services/movies-thunks";
+// import {findMovieReviewsThunk} from "../services/reviews-thunks";
 
 const SearchItem = ({movie}) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const titleClickHandler = () => {
-    // dispatch(searchMovieIdThunk(movie.imdbID));
-    // dispatch(findMovieReviewsThunk(movie.imdbID));
-  }
+  // const titleClickHandler = () => {
+  //   dispatch(searchMovieIdThunk(movie.imdbID));
+  //   dispatch(findMovieReviewsThunk(movie.imdbID));
+  // }
 
   // check valid poster address
   let posterAddress = "https://templatelab.com/wp-content/uploads/2019/06/movie-poster-template-03.jpg";
@@ -26,7 +26,7 @@ const SearchItem = ({movie}) => {
             className="text-black fw-bold fs-5" 
             style={{textDecorationLine:"none"}} 
             title={movie.Title} 
-            onClick={titleClickHandler}>
+          >
             {movie.Title}
           </Link>
           <div><span className="text-success fw-bold">Year </span>{movie.Year}</div>

@@ -2,10 +2,11 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
 import {useSelector, useDispatch} from "react-redux";
+import cookie from "react-cookies";
 
-import { getRandomMovies } from "../reducers/movie-reducer";
+
 import {logout} from "../reducers/user-reducer";
-import { searchRandomIdThunk } from "../services/movies-thunks";
+
 
 
 const NavigationComponent = () => {
@@ -16,19 +17,13 @@ const NavigationComponent = () => {
 
   // load initial data from reducer
   const {currentUser} = useSelector(state => state.usersData);
-  const {imdbIDArray} = useSelector(state => state.moviesData);
   
   const dispatch = useDispatch();
-  
-  // // get new set of movies
-  // const homeClickHandler = () => {
-  //   dispatch(getRandomMovies());
-  //   dispatch(searchRandomIdThunk(imdbIDArray));
-  // };
 
   // log out
   const logoutClickHandler = () => {
     dispatch(logout());
+    cookie.remove("userInfo", {path: "/"});
   };
 
 

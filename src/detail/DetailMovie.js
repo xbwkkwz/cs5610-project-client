@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, Routes, Route} from "react-router";
 
@@ -20,9 +20,9 @@ const DetailMovie = () => {
 
   // auto load data
   const dispatch = useDispatch();
-  useEffect(() => {dispatch(searchMovieIdThunk(movieid))}, [dispatch]);
-  useEffect(() => {dispatch(findMovieReviewsThunk(movieid))}, [dispatch]);
-  useEffect(() => {dispatch(findMovieSellsThunk(movieid))}, [dispatch]);
+  useEffect(() => {dispatch(searchMovieIdThunk(movieid))}, [movieid, dispatch]);
+  useEffect(() => {dispatch(findMovieReviewsThunk(movieid))}, [movieid, dispatch]);
+  useEffect(() => {dispatch(findMovieSellsThunk(movieid))}, [movieid, dispatch]);
 
   // load initial data from reducer
   const {movieDetail, loading, response, error} = useSelector(state => state.moviesData);
