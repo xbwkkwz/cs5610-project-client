@@ -4,7 +4,7 @@ import {useLocation} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
 import {deleteSellThunk} from "../services/sells-thunks";
-import {searchMovieIdThunk} from "../services/movies-thunks";
+// import {searchMovieIdThunk} from "../services/movies-thunks";
 
 const DetailSellItem = ({sell}) => {
 
@@ -18,8 +18,9 @@ const DetailSellItem = ({sell}) => {
   
   const dispatch = useDispatch();
 
+  // no need to do this, the page will use url address to find movie
   const titleClickHandler = () => {
-    dispatch(searchMovieIdThunk(sell.movieid));
+    // dispatch(searchMovieIdThunk(sell.movieid));
   }
 
   const deleteClickHandler = () => {
@@ -35,14 +36,13 @@ const DetailSellItem = ({sell}) => {
       {/* movie part */}
       { (active !== "details") &&
       <div className="d-flex">
-        <img className="img-fluid img-thumbnail w-25 me-3" src={posterAddress} alt="Movie Poster"/>
+        <Link to={`/details/${sell.movieid}/sells`} onClick={titleClickHandler} className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></Link>
         <div className="">
           <Link to={`/details/${sell.movieid}/sells`} 
             className="text-black fw-bold fs-5" 
             style={{textDecorationLine:"none"}} 
             title={sell.Title} 
-            onClick={titleClickHandler}>
-            {sell.Title}
+            onClick={titleClickHandler}>{sell.Title}
           </Link>
           <div><span className="text-success fw-bold">Year </span>{sell.Year}</div>
           <div><span className="text-success fw-bold">imdbID </span>{sell.movieid}</div>
@@ -53,7 +53,7 @@ const DetailSellItem = ({sell}) => {
 
       {/* name part */}
       <div className="d-flex align-items-center mb-2">
-        <img className="rounded-circle me-2" width={40} height={40} src={sell.icon} alt="Icon"/>
+      <Link to={`/profile/seller${(currentUser && currentUser._id === sell.sellerid) ? "/sells" : "/" + sell.sellerid + "/sells"}`}><img className="rounded-circle me-2" width={40} height={40} src={sell.icon} alt="Icon"/></Link>
         <div>
           <Link to={`/profile/seller${(currentUser && currentUser._id === sell.sellerid) ? "/sells" : "/" + sell.sellerid + "/sells"}`} style={{textDecorationLine:"none"}} className="text-black fw-bold me-1">{sell.name}</Link>
           <span className="text-secondary">· {sell.time.slice(0, 10)}</span>

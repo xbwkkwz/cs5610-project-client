@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 // import { findReviewByIdThunk } from "../services/reviews-thunks";
 import { deleteReviewThunk } from "../services/reviews-thunks";
-import { searchMovieIdThunk } from "../services/movies-thunks";
+// import { searchMovieIdThunk } from "../services/movies-thunks";
 
 const DetailReviewItem = ({review}) => {
 
@@ -19,8 +19,9 @@ const DetailReviewItem = ({review}) => {
   
   const dispatch = useDispatch();
 
+  // no need this, the url has the id, it can auto find movie
   const titleClickHandler = () => {
-    dispatch(searchMovieIdThunk(review.movieid));
+    // dispatch(searchMovieIdThunk(review.movieid));
   }
 
   // const editClickHandler = () => {
@@ -40,14 +41,13 @@ const DetailReviewItem = ({review}) => {
       {/* movie part */}
       { (active !== "details") &&
       <div className="d-flex">
-        <div className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></div>
+        <Link to={`/details/${review.movieid}/reviews`} onClick={titleClickHandler} className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></Link>
         <div>
           <Link to={`/details/${review.movieid}/reviews`} 
             className="text-black fw-bold fs-5" 
             style={{textDecorationLine:"none"}} 
             title={review.Title} 
-            onClick={titleClickHandler}>
-            {review.Title}
+            onClick={titleClickHandler}>{review.Title}
           </Link>
           <div><span className="text-success fw-bold">Year </span>{review.Year}</div>
           <div><span className="text-success fw-bold">imdbID </span>{review.movieid}</div>
@@ -58,7 +58,7 @@ const DetailReviewItem = ({review}) => {
 
       {/* name part */}
       <div className="d-flex align-items-center mb-2">
-        <img className="rounded-circle me-2" width={40} height={40} src={review.icon} alt="Icon"/>
+      <Link to={`/profile/customer/${(currentUser && currentUser._id === review.customerid) ? "reviews" : review.customerid + "/reviews"}`}><img className="rounded-circle me-2" width={40} height={40} src={review.icon} alt="Icon"/></Link>
         <div>
           <Link to={`/profile/customer/${(currentUser && currentUser._id === review.customerid) ? "reviews" : review.customerid + "/reviews"}`} style={{textDecorationLine:"none"}} className="text-black fw-bold me-1">{review.name}</Link>
           <span className="text-secondary">· {review.time.slice(0, 10)}</span>

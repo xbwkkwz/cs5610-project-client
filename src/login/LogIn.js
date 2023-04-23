@@ -75,6 +75,7 @@ const LogIn = () => {
               <input className="form-control me-2"
                 type="email"
                 placeholder="email@domain.com" 
+                value={email}
                 onChange={emailChangeHandler}
               /></label>
               {!response && (error === "Email does not exist.") && <div className="text-danger">{error}</div>}
@@ -84,13 +85,14 @@ const LogIn = () => {
               <input className="form-control me-2"
                 type="password"
                 placeholder="******" 
+                value={password}
                 onChange={passwordChangeHandler}
               /></label>
               {!response && (error === "Wrong passwords.") && <div className="text-danger">{error}</div>}
             </div>
             <div className="d-grid mb-5">
               <label>Role
-              <select className="form-select"
+              <select className="form-select" defaultValue={role}
                 onChange={roleChangeHandler}>
                 <option value="customer">Customer</option>
                 <option value="seller">Seller</option>

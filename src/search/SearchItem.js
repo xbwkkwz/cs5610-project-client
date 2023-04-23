@@ -20,14 +20,12 @@ const SearchItem = ({movie}) => {
   return (
     <li className="list-group-item">
       <div className="d-flex">
-        <div className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></div>
+      <Link to={`/details/${movie.imdbID}/reviews`} className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></Link>
         <div>
           <Link to={`/details/${movie.imdbID}/reviews`} 
             className="text-black fw-bold fs-5" 
             style={{textDecorationLine:"none"}} 
-            title={movie.Title} 
-          >
-            {movie.Title}
+            title={movie.Title}>{movie.Title}
           </Link>
           <div><span className="text-success fw-bold">Year </span>{movie.Year}</div>
           <div><span className="text-success fw-bold">imdbID </span>{movie.imdbID}</div>

@@ -74,7 +74,7 @@ const CustomerInfo= () => {
 
   // redirect to home page
   useEffect(() => {
-    if (!currentUser && pathsLength === 4) nav("/login");
+    if (!currentUser && pathsLength === 4) nav("/");
   });
   
   // which data to display
@@ -151,6 +151,13 @@ const CustomerInfo= () => {
           {/* bio */}
           {user.bio !== "" && <div>{user.bio}</div>}
           <hr/>
+
+          {/* email */}
+          {(pathsLength === 4) &&
+            <div className="text-secondary">
+              <i className="bi bi-envelope me-1"></i>
+              <span className="text-secondary">Account {user.email}</span>
+            </div>}
 
           {/* address */}
           {("address" in user) && (user.address !== "") &&

@@ -44,12 +44,12 @@ const FollowerItem = ({customer}) => { // change this to customer
   return (
     <li className="list-group-item">
       <div className="d-flex align-items-center">
-        <img className="rounded-circle me-2" width={40} height={40} src={customer.icon} alt="Icon"/>
+      <Link to={`/profile/customer/${currentUser && currentUser._id === customer._id ? "reviews" : customer._id + "/reviews"}`}><img className="rounded-circle me-2" width={40} height={40} src={customer.icon} alt="Icon"/></Link>
         <Link to={`/profile/customer/${currentUser && currentUser._id === customer._id ? "reviews" : customer._id + "/reviews"}`} 
           style={{textDecorationLine:"none"}} 
           className="text-black fw-bold"
-          onClick={nameClickHandler}
-          >{customer.name}</Link>
+          onClick={nameClickHandler}>{customer.name}
+        </Link>
         {/* button part */}
         {pathsLength === 4 && <div className="ms-auto">
           {!(currentUser.following.includes(customer._id)) && <span className="btn btn-outline-success" onClick={followClickHandler} title="Follow this profile"><i className="bi bi-check-square"></i> Follow</span>}

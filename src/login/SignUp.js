@@ -79,6 +79,7 @@ const SignUp = () => {
               <input className="form-control me-2"
                 type="email"
                 placeholder="email@domain.com" 
+                value={email}
                 onChange={emailChangeHandler}
               /></label>
             </div>
@@ -88,6 +89,7 @@ const SignUp = () => {
               <input className="form-control me-2"
                 type="password"
                 placeholder="******" 
+                value={password}
                 onChange={passwordChangeHandler}
               /></label>
             </div>
@@ -96,12 +98,13 @@ const SignUp = () => {
               <input className="form-control me-2"
                 type="text"
                 placeholder="display name" 
+                value={name}
                 onChange={nameChangeHandler}
               /></label>
             </div>
             <div className="d-grid mb-5">
               <label>Role
-              <select className="form-select"
+              <select className="form-select" defaultValue={role}
                 onChange={roleChangeHandler}>
                 <option value="customer">Customer</option>
                 <option value="seller">Seller</option>

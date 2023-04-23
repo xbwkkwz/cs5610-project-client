@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 import DetailReviewItem from "../detail/DetailReviewItem";
 
@@ -9,12 +10,13 @@ import { findFollowingReviewsThunk } from "../services/reviews-thunks";
 
 const FollowingList = () => {
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   // load initial user data from reducer
   const {currentUser} = useSelector(state => state.usersData);
   const {followingReview, loading, response, error} = useSelector(state => state.reviewsData);
   
-  // auto load random movies
+  // auto load following people's reviews
   useEffect(() => {currentUser && dispatch(findFollowingReviewsThunk(currentUser.following))}, [currentUser, dispatch]);
 
   const refreshOnClickHandler = () => {
@@ -23,6 +25,11 @@ const FollowingList = () => {
 
   // no content image address
   const imgAddress = "https://i.imgflip.com/4irqtl.png";
+
+  // redirect to home page
+  useEffect(() => {
+    if (!currentUser) nav("/");
+  });
   
   return (
     <>
