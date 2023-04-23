@@ -34,7 +34,7 @@ const Website = () => {
         <div className="col-2 col-md-2 col-lg-2 col-xl-2">
           <Routes>
             <Route path="/" element={<NavigationComponent/>}/>
-            <Route path="/search" element={<NavigationComponent/>}/>
+            <Route path="/search/*" element={<NavigationComponent/>}/>
             <Route path="/details/*" element={<NavigationComponent/>}/>
             <Route path="/profile/*" element={<NavigationComponent/>}/>
             <Route path="/following" element={<NavigationComponent/>}/>
@@ -49,7 +49,7 @@ const Website = () => {
             <Route path="/login" element={<LoginComponent/>}/>
 
             <Route path="/" element={<HomeComponent/>}/>
-            <Route path="/search" element={<SearchComponent/>}/>
+            <Route path="/search/*" element={<SearchComponent/>}/>
             <Route path="/details/*" element={<DetailComponent/>}/>
             <Route path="/profile/*" element={<ProfileComponent/>}/>
             <Route path="/following" element={<FollowingComponent/>}/>
@@ -61,7 +61,7 @@ const Website = () => {
         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-3 col-xl-3">
           <Routes>
             <Route path="/" element={<SideBarComponent/>}/>
-            <Route path="/search" element={<SideBarComponent/>}/>
+            <Route path="/search/*" element={<SideBarComponent/>}/>
             <Route path="/details/*" element={<SideBarComponent/>}/>
             <Route path="/profile/*" element={<SideBarComponent/>}/>
             <Route path="/following" element={<SideBarComponent/>}/>

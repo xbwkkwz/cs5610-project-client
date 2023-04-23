@@ -3,6 +3,7 @@ import * as service from "./movies-service";
 
 
 // input is title string
+// the search string is encode already
 // could return enpty array
 export const searchMovieTitleThunk = createAsyncThunk(
   'movies/searchTitle', // unique thunk identifier
