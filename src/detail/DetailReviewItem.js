@@ -3,8 +3,9 @@ import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
-import {deleteReviewThunk} from "../services/reviews-thunks";
-import {searchMovieIdThunk} from "../services/movies-thunks";
+// import { findReviewByIdThunk } from "../services/reviews-thunks";
+import { deleteReviewThunk } from "../services/reviews-thunks";
+import { searchMovieIdThunk } from "../services/movies-thunks";
 
 const DetailReviewItem = ({review}) => {
 
@@ -22,6 +23,10 @@ const DetailReviewItem = ({review}) => {
     dispatch(searchMovieIdThunk(review.movieid));
   }
 
+  // const editClickHandler = () => {
+  //   dispatch(findReviewByIdThunk(review._id));
+  // };
+
   const deleteClickHandler = () => {
     dispatch(deleteReviewThunk(review._id));
   }
@@ -35,8 +40,8 @@ const DetailReviewItem = ({review}) => {
       {/* movie part */}
       { (active !== "details") &&
       <div className="d-flex">
-        <img className="img-fluid img-thumbnail w-25 me-3" src={posterAddress} alt="Movie Poster"/>
-        <div className="">
+        <div className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></div>
+        <div>
           <Link to={`/details/${review.movieid}/reviews`} 
             className="text-black fw-bold fs-5" 
             style={{textDecorationLine:"none"}} 

@@ -131,20 +131,19 @@ const CustomerInfo= () => {
       <ul className="list-group">
         <li className="list-group-item">
           <div className="btn" onClick={backClickHandler} title="Back to last page"><i className="bi bi-backspace"></i> Back</div>
-          <img className="img-fluid mb-2" src={user.bg} alt="Background"/>
+          <img className="rounded img-fluid mb-2" src={user.bg} alt="Background"/>
           {/* head and button */}
           <div className="d-flex">
             <div className="me-2" style={{width: "15%"}}><img className="img-thumbnail rounded-circle"  src={user.icon} alt="icon"/></div>
             <div>
-              {pathsLength === 4 && <i className="bi bi-balloon-heart fs-4 text-success">Say Hi to~</i>}
+              <i className="bi bi-balloon-heart fs-4 text-success">Say Hi to~</i>
               <div className="fs-2 fw-bold">{user.name}</div>
-              
+            </div>
+            <div className="ms-auto">
               {currentUser && currentUser.role === "customer" && (paths[2] === "customer")  && (pathsLength === 5) && !(currentUser.following.includes(otherUser._id)) && 
                 <div className="btn btn-outline-success" onClick={followClickHandler} title="Follow this profile"><i className="bi bi-check-square"></i> Follow</div>}
               {currentUser && currentUser.role === "customer" && (paths[2] === "customer")  && (pathsLength === 5) && (currentUser.following.includes(otherUser._id)) && 
                 <div className="btn btn-outline-warning" onClick={unfollowClickHandler} title="Unfollow this profile"><i className="bi bi-x-square"></i> Unfollow</div>}
-            </div>
-            <div className="ms-auto">
               {pathsLength === 4 && <Link to="/edit/profile" className="btn btn-outline-primary rounded-pill">Edit profile</Link>}
             </div>
           </div>
@@ -202,6 +201,7 @@ const CustomerInfo= () => {
       {!loading && response && <DetailNav/>}
       {/* load review or following or follower */}
       <Routes>
+        {/* the paths here is relative, profile/role//reviews is ok */}
         <Route path={`${userid}/reviews`} element={!loading && response && <DetailReviewList imdbID={""}/>}/>
         <Route path={`${userid}/followings`} element={!loading && response && <FollowingList/>}/>
         <Route path={`${userid}/followers`} element={!loading && response && <FollowerList/>}/>

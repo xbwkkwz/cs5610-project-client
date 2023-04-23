@@ -113,8 +113,15 @@ const slice = createSlice({
     },
     [updateSellThunk.fulfilled]:
     (state, { payload }) => {
-      let index = state.currentSell.findIndex(s => s._id === payload._id);
-      state.currentSell[index] = {...state.currentSell[index], ...payload};
+      // need to update both variable
+      let index = state.movieSell.findIndex(s => s._id === payload._id);
+      if (index !== -1) {
+        state.movieSell[index] = {...state.movieSell[index], ...payload};
+      }
+      index = state.currentSell.findIndex(s => s._id === payload._id);
+      if (index !== -1) {
+        state.currentSell[index] = {...state.currentSell[index], ...payload};
+      }
       state.loading = false;
     },
     [updateSellThunk.rejected]:
@@ -133,6 +140,7 @@ const slice = createSlice({
     },
     [deleteSellThunk.fulfilled]:
     (state, { payload }) => {
+      // update both data variable
       state.movieSell = state.movieSell.filter(s => s._id !== payload);
       state.currentSell = state.currentSell.filter(s => s._id !== payload);
       state.loading = false;

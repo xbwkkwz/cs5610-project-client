@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 import {
   createReviewThunk,
+  findReviewByIdThunk,
   findMovieReviewsThunk,
   findCustomerReviewsThunk,
   findOtherReviewsThunk,
@@ -15,7 +16,8 @@ const initialState = {
   movieReview: [], //ok
   currentReview: [], //ok
   otherReview: [], //ok
-  followingReview: [],
+  followingReview: [], //ok
+  oneReview: null,
 
   loading: false,
   response: true,
@@ -40,6 +42,26 @@ const slice = createSlice({
       state.loading = false;
     },
     [createReviewThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error; // action: {payload, error, ...}
+    },
+
+    // find one review from its id
+    [findReviewByIdThunk.pending]:
+    (state) => {
+      state.oneReview = null;
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findReviewByIdThunk.fulfilled]:
+    (state, { payload }) => {
+      state.oneReview = payload; // only one review
+      state.loading = false;
+    },
+    [findReviewByIdThunk.rejected]:
     (state, action) => {
       state.loading = false;
       state.response = false;
@@ -135,8 +157,14 @@ const slice = createSlice({
     },
     [updateReviewThunk.fulfilled]:
     (state, { payload }) => {
-      let index = state.currentReview.findIndex(r => r._id === payload._id);
-      state.currentReview[index] = {...state.currentReview[index], ...payload};
+      let index = state.movieReview.findIndex(r => r._id === payload._id);
+      if (index !== -1) {
+        state.movieReview[index] = {...state.movieReview[index], ...payload};
+      }
+      index = state.currentReview.findIndex(r => r._id === payload._id);
+      if (index !== -1) {
+        state.currentReview[index] = {...state.currentReview[index], ...payload};
+      }
       state.loading = false;
     },
     [updateReviewThunk.rejected]:
@@ -155,6 +183,7 @@ const slice = createSlice({
     },
     [deleteReviewThunk.fulfilled]:
     (state, { payload }) => {
+      // delete from both data array
       state.movieReview = state.movieReview.filter(r => r._id !== payload);
       state.currentReview = state.currentReview.filter(r => r._id !== payload);
       state.loading = false;

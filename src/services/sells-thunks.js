@@ -11,9 +11,11 @@ export const createSellThunk = createAsyncThunk(
   async (sell) => {
     const newSell = await service.create_sell(sell);
     // step 2, get user details
+    let movie = await moviesService.search_movie_id(sell.movieid);
+    movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
     let seller = await sellersService.find_seller_id(sell.sellerid);
     seller = {name: seller.name, bio: seller.bio, icon: seller.icon};
-    let fullSell = {...newSell, ...seller};
+    let fullSell = {...newSell, ...movie, ...seller};
     return fullSell;
   }
 );
@@ -27,9 +29,11 @@ export const findMovieSellsThunk = createAsyncThunk(
     // step 2, get user details
     let fullSells = [];
     for (let i=0; i<sells.length; i++) {
+      let movie = await moviesService.search_movie_id(sells[i].movieid);
+      movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
       let seller = await sellersService.find_seller_id(sells[i].sellerid);
       seller = {name: seller.name, bio: seller.bio, icon: seller.icon};
-      fullSells.push({...sells[i], ...seller});
+      fullSells.push({...sells[i], ...movie, ...seller});
     }
     return fullSells;
   }

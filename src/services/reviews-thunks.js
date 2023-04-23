@@ -11,10 +11,21 @@ export const createReviewThunk = createAsyncThunk(
   async (review) => {
     const newReview = await service.create_review(review);
     // step 2, get user details
+    let movie = await moviesService.search_movie_id(review.movieid);
+    movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
     let customer = await customersService.find_customer_id(review.customerid);
     customer = {name: customer.name, bio: customer.bio, icon: customer.icon};
-    let fullReview = {...newReview, ...customer};
+    let fullReview = {...newReview, ...movie, ...customer};
     return fullReview;
+  }
+);
+
+// get one review by its id
+export const findReviewByIdThunk = createAsyncThunk(
+  'reviews/findById', // unique id
+  async (reviewId) => {
+    const review = await service.find_review_by_id(reviewId);
+    return review;
   }
 );
 
@@ -27,9 +38,11 @@ export const findMovieReviewsThunk = createAsyncThunk(
     // step 2, get user details
     let fullReviews = [];
     for (let i=0; i<reviews.length; i++) {
+      let movie = await moviesService.search_movie_id(reviews[i].movieid);
+      movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
       let customer = await customersService.find_customer_id(reviews[i].customerid);
       customer = {name: customer.name, bio: customer.bio, icon: customer.icon};
-      fullReviews.push({...reviews[i], ...customer});
+      fullReviews.push({...reviews[i], ...movie, ...customer});
     }
     return fullReviews;
   }

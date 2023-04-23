@@ -20,7 +20,7 @@ const DetailReviewList = ({imdbID}) => {
   
   // store string
   const [content, setContent] = useState('');
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(5);
 
   let review = {};
   if (currentUser) {
@@ -71,7 +71,7 @@ const DetailReviewList = ({imdbID}) => {
             {/* second part */}
             <div className="d-flex">
               <label className="d-flex"><span className="text-success fw-bold me-2">Rating</span>
-                <select className="form-select"
+                <select defaultValue={5} className="form-select"
                   onChange={ratingChangeHandler}>
                   <option value={1}>1/5</option>
                   <option value={2}>2/5</option>

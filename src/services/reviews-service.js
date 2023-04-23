@@ -17,6 +17,13 @@ export const create_review = async (review) => {
   return response.data;
 }
 
+// get one review from its id
+// response is one review
+export const find_review_by_id = async (reviewId) => {
+  const response = await axios.get(`${MONGO_API}/reviews/${reviewId}`);
+  return response.data;
+};
+
 // get reviews for one movie
 // response is json lists, can empty
 export const find_movie_reviews = async (imdbID) => {

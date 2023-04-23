@@ -17,6 +17,7 @@ import SearchComponent from "./search/SearchIndex"
 import DetailComponent from "./detail/DetailIndex";
 import FollowingComponent from "./following/FollowingIndex";
 import ProfileComponent from "./profile/ProfileIndex";
+import EditComponent from "./edit/EditIndex";
 
 import SideBarComponent from "./sidebar/SideBarIndex";
 
@@ -36,6 +37,7 @@ const Website = () => {
             <Route path="/details/*" element={<NavigationComponent/>}/>
             <Route path="/profile/*" element={<NavigationComponent/>}/>
             <Route path="/following" element={<NavigationComponent/>}/>
+            <Route path="/edit/*" element={<NavigationComponent/>}/>
             <Route path="/setting" element={<NavigationComponent/>}/>
           </Routes>
         </div>
@@ -50,6 +52,7 @@ const Website = () => {
             <Route path="/details/*" element={<DetailComponent/>}/>
             <Route path="/profile/*" element={<ProfileComponent/>}/>
             <Route path="/following" element={<FollowingComponent/>}/>
+            <Route path="/edit/*" element={<EditComponent/>}/>
           </Routes>
         </div>
         
@@ -60,6 +63,7 @@ const Website = () => {
             <Route path="/details/*" element={<SideBarComponent/>}/>
             <Route path="/profile/*" element={<SideBarComponent/>}/>
             <Route path="/following" element={<SideBarComponent/>}/>
+            <Route path="/edit/*" element={<SideBarComponent/>}/>
             <Route path="/setting" element={<SideBarComponent/>}/>
           </Routes>
         </div>

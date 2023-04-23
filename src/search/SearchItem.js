@@ -20,7 +20,7 @@ const SearchItem = ({movie}) => {
   return (
     <li className="list-group-item">
       <div className="d-flex">
-        <img className="img-fluid img-thumbnail w-25 me-3" src={posterAddress} alt="Movie Poster"/>
+        <div className="me-3" style={{width: "25%"}}><img className="img-thumbnail" src={posterAddress} alt="Movie Poster"/></div>
         <div>
           <Link to={`/details/${movie.imdbID}/reviews`} 
             className="text-black fw-bold fs-5" 
