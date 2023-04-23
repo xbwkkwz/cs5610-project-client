@@ -40,13 +40,17 @@ const NavigationComponent = () => {
           <i className="bi bi-house" title="Home"></i>
           <span className="d-none d-xl-inline"> Home</span></Link>
         
+        <Link to="/popular" className={`list-group-item ${active === 'popular' ? 'active' : ''}`}>
+          <i className="bi bi-fire" title="Popular"></i>
+          <span className="d-none d-xl-inline"> Popular</span></Link>
+        
         <Link to="/search" className={`list-group-item ${active === 'search' ? 'active' : ''}`}>
           <i className="bi bi-search" title="Search"></i>
           <span className="d-none d-xl-inline"> Search</span></Link>
         
-        {currentUser && currentUser.role === "customer" && <Link to="/following" className={`list-group-item ${active === 'following' ? 'active' : ''}`}>
+        {/* {currentUser && currentUser.role === "customer" && <Link to="/following" className={`list-group-item ${active === 'following' ? 'active' : ''}`}>
           <i className="bi bi-rss" title="Following"></i>
-          <span className="d-none d-xl-inline"> Following</span></Link>}
+          <span className="d-none d-xl-inline"> Following</span></Link>} */}
 
         {currentUser && <Link to={`/profile/${currentUser.role === "customer" ? "customer/reviews" : "seller/sells"}`} className={`list-group-item ${active === 'profile' && paths.length === 4 ? 'active' : ''}`}>
           <i className="bi bi-people" title="Profile"></i>

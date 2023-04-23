@@ -20,7 +20,7 @@ const initialState = {
   movieList: [],
   movieDetail: {},
 
-  imdbIDArray: top_250_movies.slice(100,110),
+  imdbIDArray: shuffle(top_250_movies).slice(0,10),
   randomMovieList: [],
 
   loading: false,

@@ -24,6 +24,13 @@ export const find_review_by_id = async (reviewId) => {
   return response.data;
 };
 
+// get recent 10 reviews
+// response is array or empty
+export const find_review_by_time = async () => {
+  const response = await axios.get(`${MONGO_API}/reviews/recent`);
+  return response.data;
+};
+
 // get reviews for one movie
 // response is json lists, can empty
 export const find_movie_reviews = async (imdbID) => {

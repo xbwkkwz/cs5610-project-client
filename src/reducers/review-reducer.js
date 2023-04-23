@@ -7,6 +7,8 @@ import {
   findCustomerReviewsThunk,
   findOtherReviewsThunk,
   findFollowingReviewsThunk,
+  findReviewByTimeThunk,
+  
   updateReviewThunk,
   deleteReviewThunk,
   deleteAllReviewsThunk
@@ -18,6 +20,7 @@ const initialState = {
   otherReview: [], //ok
   followingReview: [], //ok
   oneReview: null,
+  recentReview: [],
 
   loading: false,
   response: true,
@@ -142,6 +145,25 @@ const slice = createSlice({
       state.loading = false;
     },
     [findFollowingReviewsThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error; // action: {payload, error, ...}
+    },
+
+    // find recent reviews
+    [findReviewByTimeThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findReviewByTimeThunk.fulfilled]:
+    (state, { payload }) => {
+      state.recentReview = payload; // the order is already flipped
+      state.loading = false;
+    },
+    [findReviewByTimeThunk.rejected]:
     (state, action) => {
       state.loading = false;
       state.response = false;

@@ -66,7 +66,7 @@ const DetailSellItem = ({sell}) => {
       </ul>
       
       {/* button part */}
-      {currentUser && (currentUser._id === sell.sellerid) && <div className="float-end">
+      {(paths.length < 2) && currentUser && (currentUser._id === sell.sellerid) && <div className="float-end">
         <Link to={`/edit/sell/${sell._id}`} style={{textDecorationLine:"none"}} className="btn btn-outline-warning me-4" title="Edit this sell"><i className="bi bi-pencil-square"></i> Edit</Link>
         <span className="btn btn-outline-danger" onClick={deleteClickHandler} title="Delete this sell"><i className="bi bi-x-square"></i> Delete</span>
       </div>}

@@ -34,6 +34,13 @@ export const find_seller_sells = async (sellerId) => {
   return response.data;
 }
 
+// get recent 10 sells
+// response is array or empty
+export const find_sell_by_time = async () => {
+  const response = await axios.get(`${MONGO_API}/sells/recent`);
+  return response.data;
+};
+
 // edit one sell for one seller
 // input >> {"_id", "price"}
 export const update_sell = async (sell) => {

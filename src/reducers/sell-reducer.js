@@ -5,6 +5,8 @@ import {
   findMovieSellsThunk,
   findSellerSellsThunk,
   findOtherSellsThunk,
+  findSellByTimeThunk,
+
   updateSellThunk,
   deleteSellThunk,
   deleteAllSellsThunk
@@ -14,6 +16,7 @@ const initialState = {
   movieSell: [],
   currentSell: [],
   otherSell: [],
+  recentSell: [],
 
   loading: false,
   response: true,
@@ -98,6 +101,25 @@ const slice = createSlice({
       state.loading = false;
     },
     [findOtherSellsThunk.rejected]:
+    (state, action) => {
+      state.loading = false;
+      state.response = false;
+      state.error = action.error; // action: {payload, error, ...}
+    },
+
+    // find recent sells
+    [findSellByTimeThunk.pending]:
+    (state) => {
+      state.loading = true;
+      state.response = true;
+      state.error = "";
+    },
+    [findSellByTimeThunk.fulfilled]:
+    (state, { payload }) => {
+      state.recentSell = payload; // the order is already reversed
+      state.loading = false;
+    },
+    [findSellByTimeThunk.rejected]:
     (state, action) => {
       state.loading = false;
       state.response = false;

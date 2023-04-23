@@ -12,11 +12,12 @@ import NavigationComponent from "./navigation/NavigationIndex";
 import SignUpComponent from "./login/SignUpIndex";
 import LoginComponent from "./login/LogInIndex";
 
-import HomeComponent from "./home/HomeIndex";
+import FollowingComponent from "./following/FollowingIndex";
+import PopularComponent from "./popular/PopularIndex";
 import SearchComponent from "./search/SearchIndex"
 import DetailComponent from "./detail/DetailIndex";
-import FollowingComponent from "./following/FollowingIndex";
 import ProfileComponent from "./profile/ProfileIndex";
+
 import EditComponent from "./edit/EditIndex";
 import SettingComponent from "./setting/SettingIndex";
 
@@ -34,10 +35,12 @@ const Website = () => {
         <div className="col-2 col-md-2 col-lg-2 col-xl-2">
           <Routes>
             <Route path="/" element={<NavigationComponent/>}/>
+            <Route path="/popular" element={<NavigationComponent/>}/>
+
             <Route path="/search/*" element={<NavigationComponent/>}/>
             <Route path="/details/*" element={<NavigationComponent/>}/>
             <Route path="/profile/*" element={<NavigationComponent/>}/>
-            <Route path="/following" element={<NavigationComponent/>}/>
+
             <Route path="/edit/*" element={<NavigationComponent/>}/>
             <Route path="/setting" element={<NavigationComponent/>}/>
           </Routes>
@@ -48,11 +51,13 @@ const Website = () => {
             <Route path="/signup" element={<SignUpComponent/>}/>
             <Route path="/login" element={<LoginComponent/>}/>
 
-            <Route path="/" element={<HomeComponent/>}/>
+            <Route path="/" element={<FollowingComponent/>}/>
+            <Route path="/popular" element={<PopularComponent/>}/>
+            
             <Route path="/search/*" element={<SearchComponent/>}/>
             <Route path="/details/*" element={<DetailComponent/>}/>
             <Route path="/profile/*" element={<ProfileComponent/>}/>
-            <Route path="/following" element={<FollowingComponent/>}/>
+
             <Route path="/edit/*" element={<EditComponent/>}/>
             <Route path="/setting" element={<SettingComponent/>}/>
           </Routes>
@@ -61,10 +66,12 @@ const Website = () => {
         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-3 col-xl-3">
           <Routes>
             <Route path="/" element={<SideBarComponent/>}/>
+            <Route path="/popular" element={<SideBarComponent/>}/>
+
             <Route path="/search/*" element={<SideBarComponent/>}/>
             <Route path="/details/*" element={<SideBarComponent/>}/>
             <Route path="/profile/*" element={<SideBarComponent/>}/>
-            <Route path="/following" element={<SideBarComponent/>}/>
+
             <Route path="/edit/*" element={<SideBarComponent/>}/>
             <Route path="/setting" element={<SideBarComponent/>}/>
           </Routes>

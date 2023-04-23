@@ -77,6 +77,25 @@ export const findOtherSellsThunk = createAsyncThunk(
   }
 );
 
+// could return empty array
+export const findSellByTimeThunk = createAsyncThunk(
+  'sells/findSellByTime', // unique thunk identifier
+  async () => {
+    // step 1, get sell records
+    const sells = await service.find_sell_by_time();
+    // step 2, get movie details
+    let fullSells = [];
+    for (let i=0; i<sells.length; i++) {
+      let movie = await moviesService.search_movie_id(sells[i].movieid);
+      movie = {Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster};
+      let seller = await sellersService.find_seller_id(sells[i].sellerid);
+      seller = {name: seller.name, bio: seller.bio, icon: seller.icon};
+      fullSells.push({...sells[i], ...movie, ...seller});
+    }
+    return fullSells;
+  }
+);
+
 // input >> {"_id", "price"}
 // return the input again
 export const updateSellThunk = createAsyncThunk(

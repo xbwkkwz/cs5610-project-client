@@ -8,7 +8,7 @@ import { searchRandomIdThunk } from "../services/movies-thunks";
 
 
 
-const HomeList = () => {
+const PopularList = () => {
   const dispatch = useDispatch();
 
   // load initial user data from reducer
@@ -27,7 +27,7 @@ const HomeList = () => {
   return (
     <>
       <div className="d-flex justify-content-between">
-        <div className="fs-3 fw-bold">Discover hot movies</div>
+        <div className="fs-3 fw-bold">Discover Popular Movies</div>
         <div className="btn fs-4 fw-bold" onClick={refreshOnClickHandler} title="Refresh"><i className="bi bi-arrow-repeat"></i></div>
       </div>
       {loading && <div className="mb-2">Refreshing list...</div>}
@@ -38,4 +38,4 @@ const HomeList = () => {
     </>
   );
 };
-export default HomeList;
+export default PopularList;
