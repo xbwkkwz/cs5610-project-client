@@ -62,7 +62,7 @@ const DetailSellItem = ({sell}) => {
 
       {/* center content */}
       <ul className="list-group mb-2">
-        <li className="list-group-item"><span className="text-success fw-bold me-3">{sell.format}</span>${sell.price}</li>
+        <li className="list-group-item d-flex justify-content-between"><span className="text-success fw-bold me-3">{sell.format}</span><span>${sell.price}</span></li>
       </ul>
       
       {/* button part */}
