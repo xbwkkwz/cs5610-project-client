@@ -18,6 +18,7 @@ import DetailComponent from "./detail/DetailIndex";
 import FollowingComponent from "./following/FollowingIndex";
 import ProfileComponent from "./profile/ProfileIndex";
 import EditComponent from "./edit/EditIndex";
+import SettingComponent from "./setting/SettingIndex";
 
 import SideBarComponent from "./sidebar/SideBarIndex";
 
@@ -53,6 +54,7 @@ const Website = () => {
             <Route path="/profile/*" element={<ProfileComponent/>}/>
             <Route path="/following" element={<FollowingComponent/>}/>
             <Route path="/edit/*" element={<EditComponent/>}/>
+            <Route path="/setting" element={<SettingComponent/>}/>
           </Routes>
         </div>
         
